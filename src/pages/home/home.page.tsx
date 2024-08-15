@@ -1,11 +1,13 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { HomeLayout } from '@/layouts'
-import { MouseEvent, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { moviesRepository } from '@/models/movies'
 import { MoviesDialog } from '@/components/MoviesDialog'
 import { useMoviesContext } from '@/context/movies.contexts'
 import { MovieCard } from '@/components/MovieCard'
+import { MovieCardSkeleton } from '@/components/MovieCardSkeleton'
+import { MovieCardDefault } from '@/components/MovieCardDefault'
 
 export function HomePage() {
   const [open, setOpen] = useState(false)
@@ -16,7 +18,7 @@ export function HomePage() {
     selectedMovies,
   } = useMoviesContext()
 
-  const searchMovie = async (e: MouseEvent) => {
+  const searchMovie = async (e: FormEvent) => {
     e.preventDefault()
 
     if (movieName === '') return
@@ -28,6 +30,8 @@ export function HomePage() {
       setMovies(data)
     }
   }
+
+  const emptyMovies = Array(3 - selectedMovies.length).fill(0)
 
   return (
     <HomeLayout>
@@ -44,19 +48,26 @@ export function HomePage() {
             Discover your next favorite movie
           </h1>
 
-          <div className="flex gap-2">
+          <form onSubmit={searchMovie} className="flex gap-2">
             <Input
               type="text"
               value={movieName}
               onChange={(e) => setMovieName(e.currentTarget.value)}
               placeholder="Write your top 3 movies..."
             />
-            <Button onClick={searchMovie}>search</Button>
-          </div>
+            <Button type="submit">search</Button>
+          </form>
 
           <div className="flex flex-col gap-2 mt-6">
-            {selectedMovies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
+            {selectedMovies.length === 0 ? (
+              <MovieCardDefault />
+            ) : (
+              selectedMovies.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))
+            )}
+            {emptyMovies.map((_, index) => (
+              <MovieCardSkeleton key={index} />
             ))}
           </div>
         </div>

@@ -4,7 +4,7 @@ import { HomePage } from './pages/home/home.page'
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <MoviesProvider>
         <HomePage />
       </MoviesProvider>
