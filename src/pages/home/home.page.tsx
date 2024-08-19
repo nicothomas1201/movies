@@ -35,6 +35,7 @@ export function HomePage() {
   } = useMoviesContext()
 
   const searchMovie = async (movieName: string) => {
+    console.log(config)
     const data = await moviesRepository.searchMovie(movieName)
     setMovieName(movieName)
 
