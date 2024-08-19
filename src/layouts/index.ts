@@ -1,1 +1,2 @@
-export * from './home.layout'
+export * from './global.layout'
+export * from './movie.layout'

@@ -1,17 +1,22 @@
-import { Button } from './ui/button'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
+  // DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu'
+} from '@/components/ui/dropdown-menu'
 import { DotsVerticalIcon } from '@radix-ui/react-icons'
+import { MouseEvent } from 'react'
 
-export function MovieCardOptions() {
+interface Props {
+  onDelete: (e: MouseEvent) => void
+}
+
+export function MovieCardOptions({ onDelete }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,10 +27,9 @@ export function MovieCardOptions() {
       <DropdownMenuContent align="center" className="w-[100px]">
         <DropdownMenuLabel>Options</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem>Rate</DropdownMenuItem>
-          <DropdownMenuItem>Change</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem className="text-red-600">
+          {/* <DropdownMenuItem>Rate</DropdownMenuItem> */}
+          {/* <DropdownMenuSeparator /> */}
+          <DropdownMenuItem className="text-red-600" onClick={onDelete}>
             Delete
             <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
           </DropdownMenuItem>

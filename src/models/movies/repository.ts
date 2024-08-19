@@ -6,6 +6,9 @@ function createMovieRepository(adapter: IMovieRepository): IMovieRepository {
     async searchMovie(query: string) {
       return await adapter.searchMovie(query)
     },
+    async getMovieById(movieId) {
+      return await adapter.getMovieById(movieId)
+    },
   }
 }
 

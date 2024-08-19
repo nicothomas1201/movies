@@ -5,6 +5,7 @@ interface ImportMetaEnv {
   readonly VITE_API_TOKEN: string
   readonly VITE_API_KEY: string
   readonly VITE_API_IMAGES: string
+  readonly VITE_AI_API_KEY: string
 }
 
 interface ImportMeta {

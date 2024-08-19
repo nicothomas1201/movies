@@ -3,4 +3,5 @@ export const config = {
   apiKey: import.meta.env.VITE_API_KEY,
   apiToken: import.meta.env.VITE_API_TOKEN,
   apiImages: import.meta.env.VITE_API_IMAGES,
+  aiApiKey: import.meta.env.VITE_AI_API_KEY,
 }

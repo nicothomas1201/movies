@@ -15,6 +15,8 @@ interface MoviesState {
 
   selectedMovies: IMovieAdapted[]
   setSelectedMovies: Set<IMovieAdapted[]>
+
+  deleteMovieSelected: (id: number) => void
 }
 
 const MoviesContext = createContext<MoviesState>({} as MoviesState)
@@ -29,9 +31,14 @@ export function MoviesProvider({ children }: { children: React.ReactNode }) {
 
   const [selectedMovies, setSelectedMovies] = useState<IMovieAdapted[]>([])
 
+  const deleteMovieSelected = (id: number) => {
+    setSelectedMovies((prev) => prev.filter((movie) => movie.id !== id))
+  }
+
   return (
     <MoviesContext.Provider
       value={{
+        deleteMovieSelected,
         searchedMovies,
         setSearchedMovies,
         selectedMovies,

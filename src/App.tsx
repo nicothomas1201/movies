@@ -1,14 +1,26 @@
-import { ThemeProvider } from './components/theme-provider'
 import { MoviesProvider } from './context/movies.contexts'
-import { HomePage } from './pages/home/home.page'
+import { GlobalLayout } from './layouts'
+import { MoviePage, HomePage, WatchedMoviesPage } from './pages'
+import { Route, Switch } from 'wouter'
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <MoviesProvider>
-        <HomePage />
-      </MoviesProvider>
-    </ThemeProvider>
+    <GlobalLayout>
+      <Switch>
+        <Route path="/">
+          <MoviesProvider>
+            <HomePage />
+          </MoviesProvider>
+        </Route>
+        <Route path="/watched-films">
+          <WatchedMoviesPage />
+        </Route>
+        <Route path="/watch-list"></Route>
+        <Route path="/movie/:id">
+          <MoviePage />
+        </Route>
+      </Switch>
+    </GlobalLayout>
   )
 }
 

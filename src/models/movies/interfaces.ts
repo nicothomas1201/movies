@@ -48,4 +48,5 @@ export interface IMoviesAdapted {
 
 export interface IMovieRepository {
   searchMovie(query: string): Promise<IMoviesAdapted>
+  getMovieById(movieId: number): Promise<IMovieAdapted>
 }

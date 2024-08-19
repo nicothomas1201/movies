@@ -1,25 +1,31 @@
 import { IMovieAdapted, IMoviesAdapted } from '@/models/movies'
 import { MovieItem } from './MovieItem'
-import { useMoviesContext } from '@/context/movies.contexts'
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 interface Props {
   movies: IMoviesAdapted['results']
+  currentMoviesSelect: IMovieAdapted[]
+  setCurrentMoviesSelect: Dispatch<SetStateAction<IMovieAdapted[]>>
 }
 
-export function MovieList({ movies }: Props) {
+export function MovieList({
+  movies,
+  currentMoviesSelect,
+  setCurrentMoviesSelect,
+}: Props) {
   const [disabledAllChecks, setDisabledAllChecks] = useState(false)
-  const { setSelectedMovies, selectedMovies } = useMoviesContext()
 
   useEffect(() => {
-    setDisabledAllChecks(selectedMovies.length >= 3)
-  }, [selectedMovies])
+    setDisabledAllChecks(currentMoviesSelect.length >= 3)
+  }, [currentMoviesSelect])
 
   const addMovie = (movie: IMovieAdapted, toDelete: boolean) => {
     if (!toDelete) {
-      setSelectedMovies((prev) => [...prev, movie])
+      setCurrentMoviesSelect((prev) => [...prev, movie])
     } else {
-      setSelectedMovies((prev) => prev.filter((item) => item.id !== movie.id))
+      setCurrentMoviesSelect((prev) =>
+        prev.filter((item) => item.id !== movie.id),
+      )
     }
   }
   return (
