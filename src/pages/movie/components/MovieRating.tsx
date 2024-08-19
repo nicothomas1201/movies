@@ -38,7 +38,9 @@ export function MovieRating({ ratingValue }: Props) {
 
   const handleMouseLeave = () => {
     setStars(originStars.current)
-    ratingValue(originStars.current.filter((star) => star.hover).length)
+    if (originStars.current.find((star) => star.hover)) {
+      ratingValue(originStars.current.filter((star) => star.hover).length)
+    }
   }
 
   return (

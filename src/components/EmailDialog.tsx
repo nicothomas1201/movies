@@ -12,6 +12,7 @@ import { TEmailForm } from '@/schemas'
 import { Button } from './ui/button'
 import { PaperPlaneIcon, ReloadIcon } from '@radix-ui/react-icons'
 import { useState } from 'react'
+import { useToast } from './ui/use-toast'
 
 interface Props {
   open: boolean
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export function EmailDialog({ open, setOpen }: Props) {
+  const { toast } = useToast()
   const [loading, setLoading] = useState(false)
   const handleSubmit = async (data: TEmailForm) => {
     setLoading(true)
@@ -27,6 +29,11 @@ export function EmailDialog({ open, setOpen }: Props) {
     localStorage.setItem('emails', JSON.stringify(emails))
     setTimeout(() => {
       setLoading(false)
+      toast({
+        title: 'Thank you!',
+        description: 'You will be the first to know when new features are live',
+      })
+      setOpen(false)
     }, 2000)
   }
 
@@ -56,7 +63,7 @@ export function EmailDialog({ open, setOpen }: Props) {
                   ) : (
                     <>
                       <span className="sr-only">Send</span>
-                      <PaperPlaneIcon className="" />
+                      <PaperPlaneIcon />
                     </>
                   )}
                 </Button>

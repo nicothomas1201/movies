@@ -5,8 +5,10 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'wouter'
 import { MovieRating } from './components'
 import { EmailDialog } from '@/components/EmailDialog'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export function MoviePage() {
+  const [imageLoading, setImageLoading] = useState(true)
   const [open, setOpen] = useState(false)
   const [movie, setMovie] = useState<IMovieAdapted | null>(null)
   const params = useParams()
@@ -29,10 +31,16 @@ export function MoviePage() {
     <MovieLayout>
       <EmailDialog open={open} setOpen={setOpen} />
       <div className="flex flex-col items-center w-full gap-2 mt-4 sm:items-start sm:flex-row sm:gap-5">
-        <div className="max-w-[400px] items-start  overflow-hidden rounded-lg">
+        <div className="relative max-w-[400px] w-full items-start border min-h-[300px] overflow-hidden rounded-lg">
+          {imageLoading ? <Skeleton className="absolute inset-0" /> : null}
+
           <img
             src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
             className="object-cover w-full h-full"
+            width={400}
+            height={570}
+            onLoad={() => setImageLoading(false)}
+            alt={movie.title}
           />
         </div>
         <div className="max-w-[500px]">
