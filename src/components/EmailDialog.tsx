@@ -13,6 +13,8 @@ import { Button } from './ui/button'
 import { PaperPlaneIcon, ReloadIcon } from '@radix-ui/react-icons'
 import { useState } from 'react'
 import { useToast } from './ui/use-toast'
+import emailjs from '@emailjs/browser'
+import { config } from '@/config'
 
 interface Props {
   open: boolean
@@ -23,18 +25,31 @@ export function EmailDialog({ open, setOpen }: Props) {
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
   const handleSubmit = async (data: TEmailForm) => {
-    setLoading(true)
-    const emails: string[] = JSON.parse(localStorage.getItem('emails') || '[]')
-    emails.push(data.email)
-    localStorage.setItem('emails', JSON.stringify(emails))
-    setTimeout(() => {
+    try {
+      setLoading(true)
+      await emailjs.send(
+        config.emailServiceId,
+        config.emailTemplateId,
+        {
+          message: data.email,
+        },
+        config.emailPublicKey,
+      )
       setLoading(false)
       toast({
         title: 'Thank you!',
         description: 'You will be the first to know when new features are live',
       })
       setOpen(false)
-    }, 2000)
+    } catch (err) {
+      console.error(err)
+      setLoading(false)
+      toast({
+        variant: 'destructive',
+        title: 'Oops!',
+        description: 'Something went wrong, please try again',
+      })
+    }
   }
 
   return (
